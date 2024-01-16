@@ -3,15 +3,17 @@ import store from "./store";
 
 
 // == State
-const state = {
-  dark: false,
-};
+// const state = {
+//   dark: false,
+//   name: "Gollum"
+// };
 
-store.dispatch({ type: "MY_FIRST_ACTION" });
+// store.dispatch({ type: "MY_FIRST_ACTION" });
 
 store.subscribe(() => {
-  console.log(store.getState());
+  // console.log(store.getState());
   renderBg();
+  renderName();
 });
 
 
@@ -24,8 +26,18 @@ function renderBg() {
   `;
 }
 
+function renderName() {
+  document.getElementById("footer")!.innerText = store.getState().textState!.name
+  document.getElementById("footer")!.style.color = `${
+    store.getState().darkReducer.dark ? "#FFFFFF" : "#000000"
+  }
+  `;
+
+
+
 // == Initialisation
 renderBg();
+renderName();
 
 // == Controls
 document.getElementById("theme-button").addEventListener("click", () => {
@@ -33,9 +45,10 @@ document.getElementById("theme-button").addEventListener("click", () => {
   console.log("Activate dark mode");
   // data
   // state.dark = !state.dark;
+  document.getElementById("input").addEventListener("input", (event) => {
   store.dispatch({type: "CHANGE_TO_DARK_MODE"})
+  });
   // ui
-  renderBg();
+  // renderBg();
 });
-
-
+}
